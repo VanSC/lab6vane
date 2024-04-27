@@ -1,0 +1,83 @@
+﻿<Window x:Class="lab6vane.UpdateProduct"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:lab6vane"
+        mc:Ignorable="d"
+        Title="UpdateProduct" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="MiBotonEstilo" TargetType="Button">
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Background" Value="Purple"/>
+            <Setter Property="BorderBrush" Value="Purple"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontWeight" Value="ExtraBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="80"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="HotPink"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="MiLabelEstilo" TargetType="Label">
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="30">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <StackPanel Grid.Column="0" Margin="30">
+
+            <Label Content="Nombre Producto:" Style="{StaticResource MiLabelEstilo}"></Label>
+            <TextBox x:Name="txtProductName" Grid.Column="0" Margin="5"/>
+
+            <Label Content="Proveedor:" Style="{StaticResource MiLabelEstilo}"></Label>
+            <TextBox x:Name="txtProveedor" Grid.Column="0" Margin="5"/>
+
+            <Label Content="Categoria:" Style="{StaticResource MiLabelEstilo}"></Label>
+            <TextBox x:Name="txtCategoria" Grid.Column="0" Margin="5"/>
+
+            <Label Content="Cantidad por Unidad:" Style="{StaticResource MiLabelEstilo}"></Label>
+            <TextBox x:Name="txtCantUni" Grid.Column="0" Margin="5"/>
+
+            <Label Content="Precio Unidad:" Style="{StaticResource MiLabelEstilo}"></Label>
+            <TextBox x:Name="txtPrecioUnidad" Grid.Column="0" Margin="5"/>
+
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Margin="30,30,30,20">
+
+            <Label Content="Unidades en existencia:" Style="{StaticResource MiLabelEstilo}"></Label>
+            <TextBox x:Name="txtUniEnExistencia" Grid.Column="0" Margin="5"/>
+
+            <Label Content="Unidades en pedido:" Style="{StaticResource MiLabelEstilo}"></Label>
+            <TextBox x:Name="txtUniPedido" Grid.Column="0" Margin="5"/>
+
+            <Label Content="Nivel Nuevo de Pedido:" Style="{StaticResource MiLabelEstilo}"></Label>
+            <TextBox x:Name="txtNivelPedido" Grid.Column="0" Margin="5"/>
+
+            <Label Content="Suspendido:" Style="{StaticResource MiLabelEstilo}"></Label>
+            <TextBox x:Name="txtSuspedido" Grid.Column="0" Margin="5"/>
+
+            <Label Content="Categoria Producto:" Style="{StaticResource MiLabelEstilo}" ></Label>
+            <TextBox x:Name="txtCategoriaProducto" Grid.Column="0" Margin="5"/>
+
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="60 10">
+                <Button Content="Actualizar" Style="{StaticResource MiBotonEstilo}" Click="UpdateProcutoClick"/>
+                <Button Content="Cancelar" Style="{StaticResource MiBotonEstilo}" Click="ButtonCancelar_Click"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

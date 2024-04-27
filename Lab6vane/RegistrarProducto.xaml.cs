@@ -54,12 +54,26 @@ namespace lab6vane
                     MessageBox.Show("Producto registrado correctamente :D");
                 }
             }
+
+            Menu menu = new Menu();
+
+            menu.ShowDialog();
+            this.Close();
         }
 
         private void ButtonCancelar_Click(object sender, RoutedEventArgs e)
         {
-            Menu list = new Menu();
-            list.ShowDialog();
+            txtProductName.Text = "";
+            txtProveedor.Text = "";
+            txtCategoria.Text = "";
+            txtCantUni.Text = "";
+            txtPrecioUnidad.Text = "";
+            txtUniEnExistencia.Text = "";
+            txtUniPedido.Text = "";
+            txtNivelPedido.Text = "";
+            txtSuspedido.Text = "";
+            txtCategoriaProducto.Text = "";
         }
+
     }
 }

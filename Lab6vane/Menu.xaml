@@ -22,6 +22,14 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <Style x:Key="MiBotonEstiloActions" TargetType="Button">
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontWeight" Value="ExtraBold"/>
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
     </Window.Resources>
     
     <Grid Margin="20">
@@ -32,7 +40,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0" Margin="5" Background="LightGray">
-            <Button Content="Listar" Style="{StaticResource MiBotonEstilo}" Height="40"/>
+            <Button Content="Listar" Style="{StaticResource MiBotonEstilo}" Height="40" Click="Button_Click_1"/>
             <Button Content="Insertar" Style="{StaticResource MiBotonEstilo}" Height="40" Click="Button_Click"/>
         </StackPanel>
 
@@ -46,7 +54,27 @@
                   AlternatingRowBackground="White"
                   BorderBrush="Gray"
                   BorderThickness="5"                  
-                  AutoGenerateColumns="True">
+                  AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Producto" Binding="{Binding NombreProducto}" />
+                    <DataGridTextColumn Header="Cantidad Unidad" Binding="{Binding CantidadPorUnidad}" />
+                    <DataGridTextColumn Header="Precio Unidad" Binding="{Binding PrecioUnidad}" />
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="Actions" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.HeaderTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="updateBtn" Content="Update" Style="{StaticResource MiBotonEstiloActions}" Click="UpdateProductClick"/>
+                                    <Button x:Name="deleteBtn" Content="Delete" Style="{StaticResource MiBotonEstiloActions}" Click="DeleteClick"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
     </Grid>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -47,7 +48,9 @@ namespace lab6vane
                     string nombreProducto = reader.GetString("nombreProducto");
                     string cantidadPorUnidad = reader.GetString("cantidadPorUnidad");
                     decimal precioUnidad = reader.GetDecimal("precioUnidad");
+                    int idProducto = reader.GetInt32("idproducto");
                     // string categoriaProducto = reader.GetString("categoriaProducto");
+                    // Para llamar columnas con datos Null
                     string categoriaProducto = reader.IsDBNull(reader.GetOrdinal("categoriaProducto")) ? null : reader.GetString("categoriaProducto");
 
                     productos.Add(new Producto
@@ -55,21 +58,13 @@ namespace lab6vane
                         NombreProducto = nombreProducto,
                         CantidadPorUnidad = cantidadPorUnidad,
                         PrecioUnidad = precioUnidad,
-                        CategoriaProducto = categoriaProducto
+                        CategoriaProducto = categoriaProducto,
+                        IdProducto = idProducto
                     });
 
                 }
 
-                // Crear una nueva lista con solo las columnas deseadas
-                var listaFiltrada = productos.Select(p => new
-                {
-                    Producto = p.NombreProducto,
-                    cantidadPorUnidad = p.CantidadPorUnidad,
-                    precioUnidad = p.PrecioUnidad,
-                    categoriaProducto = p.CategoriaProducto
-                }).ToList();
-
-                listproductos.ItemsSource = listaFiltrada;
+                listproductos.ItemsSource = productos;
             }
 
             catch (Exception ex)
@@ -78,11 +73,82 @@ namespace lab6vane
             }
 
         }
+        public static void EliminarRegistro(int id)
+        {
+            string connectionString = "Data Source=VANESSA\\SQLEXPRESS;Initial Catalog=NeptunoDB;User Id=vanne;Password=123456";
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+
+                using (SqlCommand cmd = new SqlCommand("DeleteProduct", conn))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@IdProducto", id);
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Producto eliminado correctamente :D");
+                }
+            }
+        }
+
+        public void DeleteClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Producto registroSeleccionado = (Producto)listproductos.SelectedItem;
+
+
+
+                // Obtener el ID del registro seleccionado
+                int id = registroSeleccionado.IdProducto;
+                MessageBox.Show("IdProducto del registro seleccionado: " + registroSeleccionado.IdProducto);
+
+
+                // Verifica si el ID es cero
+                if (id == 0)
+                {
+                    MessageBox.Show("El ID del registro seleccionado es cero.");
+                    return;
+                }
+
+                // Llama a la función para eliminar el registro
+                EliminarRegistro(id);
+                showproducts();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al intentar eliminar el producto: " + ex.Message);
+            }
+        }
+
+        private void UpdateProductClick(object sender, RoutedEventArgs e)
+        {
+            Producto registroSeleccionado = (Producto)listproductos.SelectedItem;
+            int id = registroSeleccionado.IdProducto;
+            MessageBox.Show("IdProducto del registro seleccionado: " + registroSeleccionado.IdProducto);
+
+            // Verifica si el ID es cero
+            if (id == 0)
+            {
+                MessageBox.Show("El ID del registro seleccionado es cero.");
+                return;
+            }
+
+            UpdateProduct updateProduct = new UpdateProduct(id);
+            updateProduct.ShowDialog();
+        }
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             RegistrarProducto registrarform = new RegistrarProducto();
             registrarform.ShowDialog();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            showproducts();
         }
     }
 }
